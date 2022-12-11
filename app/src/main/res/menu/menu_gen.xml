@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/cerrarSesion"
+        android:orderInCategory="100"
+        android:title="Cerrar Sesión"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/buscar"
+        android:orderInCategory="100"
+        app:actionViewClass="android.widget.SearchView"
+        android:title="Reiniciar Aplicación"
+        android:icon="@drawable/buscar"
+        app:showAsAction="always" />
+
+</menu>

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    android:id="@+id/card_view"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="90dp"
+    android:layout_margin="10dp"
+    app:cardCornerRadius="5dp"
+    app:contentPadding="10dp"
+    android:background="@color/white"
+    android:backgroundTint="@color/white"
+    app:cardBackgroundColor="@color/white"
+    android:orientation="vertical"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+
+    <ImageView
+        android:id="@+id/img"
+        android:layout_width="119dp"
+        android:layout_height="69dp"
+        android:src="@drawable/logopmf">
+
+    </ImageView>
+
+    <LinearLayout
+        android:layout_width="242dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="right|center">
+
+        <TextView
+            android:id="@+id/txvTipoSucursal"
+            android:layout_width="242dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:text="Veris Atenciones Prioritarias"
+            android:textColor="@color/black"
+            android:textSize="13dp"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+
+
+</androidx.cardview.widget.CardView>
