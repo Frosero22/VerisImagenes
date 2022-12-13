@@ -161,9 +161,9 @@
 
 
     <LinearLayout
-        android:layout_width="100dp"
+        android:layout_width="228dp"
         android:layout_height="36dp"
-        android:layout_marginLeft="265dp"
+        android:layout_marginLeft="145dp"
         android:layout_marginTop="141dp"
         android:orientation="horizontal">
 
@@ -175,6 +175,17 @@
 
             android:gravity="left|center"
             android:text="Ver Orden"
+            android:textColor="@color/white"
+            android:textSize="10dp" />
+
+
+        <Button
+            android:id="@+id/btn_ver_factura"
+            android:layout_width="wrap_content"
+            android:layout_height="36dp"
+            android:layout_marginLeft="10dp"
+            android:gravity="left|center"
+            android:text="Ver Factura"
             android:textColor="@color/white"
             android:textSize="10dp" />
 

@@ -89,21 +89,21 @@ public class AgendaDelDiaAdapter implements ListAdapter {
         card_view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.e("ORDENES","ORDENES ESCOGIDO "+listaOrdenes.get(i).numero_orden);
+                Log.e("ORDENES","ORDENES ESCOGIDO "+listaOrdenes.get(i).numeroOrden);
                 //Routes.goToSucursales(context,listaTiposSucursal.get(i).codigoTipoSucursal);
             }
         });
 
         TextView numero_orden = vview.findViewById(R.id.numero_orden);
-        numero_orden.setText(String.valueOf(listaOrdenes.get(i).numero_orden));
+        numero_orden.setText(String.valueOf(listaOrdenes.get(i).numeroOrden));
 
         TextView hora_inicio = vview.findViewById(R.id.hora_inicio);
-        hora_inicio.setText(listaOrdenes.get(i).hora_inicio);
+        hora_inicio.setText(listaOrdenes.get(i).horaInicioReserva);
 
         String prestaciones = null;
 
         for(DetalleOrden detalleOrden : listaDetalleOrden){
-            if(detalleOrden.numero_orden == listaOrdenes.get(i).numero_orden){
+            if(detalleOrden.numero_orden == listaOrdenes.get(i).numeroOrden){
                 if(prestaciones != null){
                     if(prestaciones.length() > 0){
                         prestaciones = prestaciones + detalleOrden.nombre_prestacion;
@@ -126,21 +126,16 @@ public class AgendaDelDiaAdapter implements ListAdapter {
         nombre_prestaciones.setText(prestaciones);
 
         TextView nombre_doctor = vview.findViewById(R.id.nombre_doctor);
-        nombre_doctor.setText(listaOrdenes.get(i).nombre_medico);
+        nombre_doctor.setText(listaOrdenes.get(i).nombreMedico);
 
         TextView nombre_paciente = vview.findViewById(R.id.nombre_paciente);
-        nombre_paciente.setText(listaOrdenes.get(i).nombre_paciente);
+        nombre_paciente.setText(listaOrdenes.get(i).nombrePaciente);
 
         Button btn_ver_detalle = vview.findViewById(R.id.btn_ver_detalle);
-        btn_ver_detalle.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+        btn_ver_detalle.setOnClickListener(view -> agendaDelDiaActivity.levantarModalDetalle(listaDetalleOrden.get(i)));
 
-                agendaDelDiaActivity.levantarModalDetalle(listaDetalleOrden.get(i));
-
-
-            }
-        });
+        Button btn_ver_factura = vview.findViewById(R.id.btn_ver_factura);
+        btn_ver_factura.setOnClickListener(view -> agendaDelDiaActivity.descargaPDFactura(listaDetalleOrden.get(i).numeroTransaccion));
 
 
 

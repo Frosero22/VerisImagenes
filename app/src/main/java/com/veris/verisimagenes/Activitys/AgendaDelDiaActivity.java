@@ -18,6 +18,7 @@ import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.MenuItemCompat;
@@ -221,7 +222,7 @@ public class AgendaDelDiaActivity extends AppCompatActivity {
 
             lsOrdenes.clear();
             for(Ordenes i : lsAuxiliar){
-                if(i.numero_orden.toString().equals(texto) || i.nombre_paciente.toLowerCase().contains(texto)){
+                if(i.numeroOrden.toString().equals(texto) || i.nombrePaciente.toLowerCase().contains(texto)){
                     lsOrdenes.add(i);
 
                 }
@@ -247,7 +248,7 @@ public class AgendaDelDiaActivity extends AppCompatActivity {
                                                   1,
                                                                 objSucursales.codigoSucursal,
                                                                 "07/12/2022",
-                "07/12/2022",
+                                                                "07/12/2022",
                                                                 2028);
 
         call.enqueue(new Callback<OrdenesResponse>() {
@@ -311,7 +312,7 @@ public class AgendaDelDiaActivity extends AppCompatActivity {
                     for(Ordenes ordenesFiltadas : lsOrdenesFiltrada){
 
 
-                        if (String.valueOf(ord.numero_orden).equalsIgnoreCase(String.valueOf(ordenesFiltadas.numero_orden))) {
+                        if (String.valueOf(ord.numeroOrden).equalsIgnoreCase(String.valueOf(ordenesFiltadas.numeroOrden))) {
                             esta = true;
                             break;
                         }
@@ -338,10 +339,11 @@ public class AgendaDelDiaActivity extends AppCompatActivity {
 
         for(Ordenes detOrden : lsOrdenes){
             DetalleOrden detalleOrden = new DetalleOrden();
-            detalleOrden.codigo_empresa = detOrden.codigo_empresa_intervalo;
-            detalleOrden.numero_orden = detOrden.numero_orden;
-            detalleOrden.nombre_prestacion = detOrden.nombre_prestacion;
-            detalleOrden.nombre_paciente = detOrden.nombre_paciente;
+            detalleOrden.codigo_empresa = detOrden.codigoEmpresaIntervalo;
+            detalleOrden.numero_orden = detOrden.numeroOrden;
+            detalleOrden.nombre_prestacion = detOrden.nombrePrestacion;
+            detalleOrden.nombre_paciente = detOrden.nombrePaciente;
+            detalleOrden.numeroTransaccion = detOrden.numeroTransaccion;
             lsDetalleOrden.add(detalleOrden);
         }
 
@@ -517,83 +519,23 @@ public class AgendaDelDiaActivity extends AppCompatActivity {
                     if(response.code() == 200){
 
 
-                      //  InputStream inputStream =
+                        runOnUiThread(() -> {
+                            refresca.setVisibility(View.GONE);
+                            textView.setVisibility(View.GONE);
+                            textView2.setVisibility(View.GONE);
+                            lista_paciente_pendientes.setVisibility(View.GONE);
+                            btncerrarpdf.setVisibility(View.VISIBLE);
 
-
-
-
-                        String nombre = "REPORTE_"+ finalBase6+".pdf";
-
-
-                      //  Uri urir = saveFileToExternalStorage(nombre,response.body().bytes());
-
-
-
-                        runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                refresca.setVisibility(View.GONE);
-                                textView.setVisibility(View.GONE);
-                                textView2.setVisibility(View.GONE);
-                                lista_paciente_pendientes.setVisibility(View.GONE);
-                                btncerrarpdf.setVisibility(View.VISIBLE);
-
-                                pdfView.setVisibility(View.VISIBLE);
-                            }
+                            pdfView.setVisibility(View.VISIBLE);
                         });
 
 
                         pdfView.fromStream(response.body().byteStream()).load();
 
-                       // Routes.goToPDFView(AgendaDelDiaActivity.this,outputStream.toString(),nombre);
-
-                        /*File file = new File(Environment.getExternalStorageDirectory().getAbsolutePath(),nombre);
-
-                        FileOutputStream fos = new FileOutputStream(file);
-                        fos.write(response.body().bytes());
-                        fos.close();
-                        Toast.makeText(AgendaDelDiaActivity.this, "guardado...", Toast.LENGTH_SHORT).show();*/
-
-
-
-                        /*Intent target = new Intent(Intent.ACTION_VIEW);
-                        target.setDataAndType(urir,"application/pdf");
-                        //Aquí especificamos el tipo de archivo
-                        target.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
-
-                        Intent intent = Intent.createChooser(target, "Open File"); //En esta línea establecemos que se muestren las aplicaciones que pueden leer un PDF
-                        try {
-                            startActivity(intent);
-                        } catch (ActivityNotFoundException e) {
-                            // Aquí podemos arrojar un mensaje para que el usuario sepa que quizás no tiene una app que lea PDF's
-                        }*/
-
-                        /*InputStream in = response.body().byteStream();
-                        if(in != null){
-                            Uri savedFileUri = savePDFFile(AgendaDelDiaActivity.this, in, "files/pdf", nombre, "resume");
-                            Log.e("URI: ", savedFileUri.toString());
-
-
-                            Routes.goToPDFView(AgendaDelDiaActivity.this,savedFileUri.toString(),nombre);
-                        }else{
-                            Toast.makeText(AgendaDelDiaActivity.this, "No se encontro ningun PDF asociado a esta orden", Toast.LENGTH_SHORT).show();
-                        }*/
-
-
-                        /*Intent target = new Intent(Intent.ACTION_VIEW);
-                        target.setDataAndType(savedFileUri,"application/pdf");
-                        //Aquí especificamos el tipo de archivo
-                        target.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
-
-                        Intent intent = Intent.createChooser(target, "Open File"); //En esta línea establecemos que se muestren las aplicaciones que pueden leer un PDF
-                        try {
-                            startActivity(intent);
-                        } catch (ActivityNotFoundException e) {
-                            // Aquí podemos arrojar un mensaje para que el usuario sepa que quizás no tiene una app que lea PDF's
-                        }*/
-
-
-
+                    }else if(response.code() == 401){
+                        Toast.makeText(AgendaDelDiaActivity.this, "Sesión caducada, por favor vuelva a ingresar", Toast.LENGTH_SHORT).show();
+                        Sesiones.borrarLogin(AgendaDelDiaActivity.this);
+                        Routes.goToLogin(AgendaDelDiaActivity.this);
                     }else{
                         loaders.cierraProgress();
                         Looper.prepare();
@@ -605,7 +547,7 @@ public class AgendaDelDiaActivity extends AppCompatActivity {
 
 
                 }catch (Exception e){
-
+                    loaders.cierraProgress();
                     e.printStackTrace();
                     Looper.prepare();
                     Mensaje.mensaje(AgendaDelDiaActivity.this,"Ocurrio un error en el aplicativo :"+e.getMessage());
@@ -615,6 +557,93 @@ public class AgendaDelDiaActivity extends AppCompatActivity {
 
         });
 
+    }
+
+
+
+    public void descargaPDFactura(int numeroTransaccion) {
+
+        loaders.mensaje("Descargando Factura ...");
+        loaders.muestraProgress();
+
+
+
+        OkHttpClient cliente = client.newBuilder()
+
+                .connectTimeout(30, TimeUnit.SECONDS)
+                .readTimeout(30, TimeUnit.SECONDS)
+                .writeTimeout(30, TimeUnit.SECONDS)
+                .callTimeout(30, TimeUnit.SECONDS)
+
+                .build();
+
+
+
+        Request request = new Request.Builder()
+                .url("https://api-phantomx.veris.com.ec/reportes/v1/facturacion/comprobante_paciente?format=pdf&codigoEmpresa="+objSucursales.codigoEmpresa+"&numeroTransaccion="+numeroTransaccion)
+                .method("GET", null)
+                .addHeader("Application", objLogin.Application)
+                .addHeader("IdOrganizacion", objLogin.IdOrganization)
+                .addHeader("Authorization", objLogin.accessToken)
+                .addHeader("Accept-Language","es")
+                .build();
+
+
+        cliente.newCall(request).enqueue(new okhttp3.Callback() {
+            @Override
+            public void onFailure(@NonNull okhttp3.Call call, @NonNull IOException e) {
+                loaders.cierraProgress();
+                e.printStackTrace();
+                Mensaje.mensaje(AgendaDelDiaActivity.this,"Ocurrio un error en el aplicativo :"+e.getMessage());
+            }
+
+            @Override
+            public void onResponse(@NonNull okhttp3.Call call, @NonNull okhttp3.Response response) throws IOException {
+
+                runOnUiThread(() -> {
+                    try{
+
+                        if(response.code() == 200){
+
+                            loaders.cierraProgress();
+
+
+                            runOnUiThread(() -> {
+                                refresca.setVisibility(View.GONE);
+                                textView.setVisibility(View.GONE);
+                                textView2.setVisibility(View.GONE);
+                                lista_paciente_pendientes.setVisibility(View.GONE);
+                                btncerrarpdf.setVisibility(View.VISIBLE);
+
+                                pdfView.setVisibility(View.VISIBLE);
+                            });
+
+
+                            pdfView.fromStream(response.body().byteStream()).load();
+
+
+
+                        }else if(response.code() == 401){
+
+                            Toast.makeText(AgendaDelDiaActivity.this, "Sesión caducada, por favor vuelva a ingresar", Toast.LENGTH_SHORT).show();
+                            Sesiones.borrarLogin(AgendaDelDiaActivity.this);
+                            Routes.goToLogin(AgendaDelDiaActivity.this);
+
+                        }else{
+                            loaders.cierraProgress();
+                            Mensaje.mensaje(AgendaDelDiaActivity.this,"Ocurrio un error al obtener PDF, Contacte a Soporte ");
+                        }
+
+                    }catch (Exception e){
+                        loaders.cierraProgress();
+                        e.printStackTrace();
+                        Mensaje.mensaje(AgendaDelDiaActivity.this,"Ocurrio un error en el aplicativo :"+e.getMessage());
+                    }
+                });
+
+
+            }
+        });
 
 
 
@@ -651,4 +680,6 @@ public class AgendaDelDiaActivity extends AppCompatActivity {
         Log.e("TAMANIO","TAMANIO DE LISTA "+lsDetalleOrdenAgregadas.size());
 
     }
+
+
 }

@@ -11,5 +11,6 @@ public class DetalleOrden {
     public String nombre_paciente;
     public int id_paciente;
     public int codigo_profesional;
+    public int numeroTransaccion;
 
 }
