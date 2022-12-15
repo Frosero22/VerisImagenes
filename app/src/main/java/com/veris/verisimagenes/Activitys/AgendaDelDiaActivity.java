@@ -7,7 +7,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Looper;
 import android.util.Base64;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -24,7 +23,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.MenuItemCompat;
 
 import com.github.barteksc.pdfviewer.PDFView;
-import com.google.gson.Gson;
 import com.veris.verisimagenes.Adapters.AgendaDelDiaAdapter;
 import com.veris.verisimagenes.Adapters.DetalleOrdenAdapter;
 import com.veris.verisimagenes.Models.DetalleOrden;
@@ -51,6 +49,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
 import okhttp3.MediaType;
@@ -373,69 +372,11 @@ public class AgendaDelDiaActivity extends AppCompatActivity {
     }
 
 
-    public void levantarModalDetalle(DetalleOrden detalleOrden){
+    public void levantarModalDetalle(Integer detalleOrden){
 
-        final AlertDialog.Builder builder = new AlertDialog.Builder(AgendaDelDiaActivity.this);
-        LayoutInflater li = (LayoutInflater) AgendaDelDiaActivity.this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View vieW = li.inflate(R.layout.ordenes_item, null,false);
-        final AlertDialog dialog = builder.create();
-        dialog.setView(vieW);
-        dialog.setCancelable(true);
-
-        GridView ordenes_existentes = vieW.findViewById(R.id.ordenes_existentes);
-
-        TextView nombrePaciente = vieW.findViewById(R.id.nombre_paciente);
-        nombrePaciente.setText(detalleOrden.nombre_paciente);
+        vizualizarPDF(detalleOrden);
 
 
-
-        List<DetalleOrden> ls = new ArrayList<>();
-        for(DetalleOrden detalle : lsDetalleOrden){
-            if(detalle.numero_orden == detalleOrden.numero_orden){
-                ls.add(detalle);
-            }
-        }
-
-        detalleOrdenAdapter = new DetalleOrdenAdapter(ls,AgendaDelDiaActivity.this);
-        ordenes_existentes.setAdapter(detalleOrdenAdapter);
-
-        Button btn_vizualizar = vieW.findViewById(R.id.btn_vizualizar);
-        btn_vizualizar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                if(lsDetalleOrdenAgregadas != null){
-                    if(lsDetalleOrdenAgregadas.size() > 0){
-                        vizualizarPDF();
-                        lsDetalleOrdenAgregadas = null;
-                        lsDetalleOrdenAgregadas = new ArrayList<>();
-                        dialog.dismiss();
-                    }else{
-                        Toast.makeText(AgendaDelDiaActivity.this, "Seleccióne alguna orden", Toast.LENGTH_SHORT).show();
-                    }
-                }else{
-                    Toast.makeText(AgendaDelDiaActivity.this, "Seleccióne alguna orden", Toast.LENGTH_SHORT).show();
-                }
-
-
-            }
-        });
-
-        Button btn_cerrar = vieW.findViewById(R.id.btn_cerrar);
-        btn_cerrar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                lsDetalleOrdenAgregadas = null;
-                lsDetalleOrdenAgregadas = new ArrayList<>();
-                dialog.dismiss();
-            }
-        });
-
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            dialog.create();
-        }
-        dialog.show();
     }
 
 
@@ -452,22 +393,9 @@ public class AgendaDelDiaActivity extends AppCompatActivity {
         super.onBackPressed();
     }
 
-    public void vizualizarPDF(){
+    public void vizualizarPDF(Integer detalleOrden){
         loaders.mensaje("Descargando PDF ...");
         loaders.muestraProgress();
-
-
-        int base64 = 0;
-
-        List<OrdenesRequest> ordenesRequests = new ArrayList<>();
-
-        for(DetalleOrden det : lsDetalleOrdenAgregadas){
-            OrdenesRequest ordenesRequest = new OrdenesRequest();
-            ordenesRequest.codigoEmpresa = 1;
-            ordenesRequest.numeroOrden = det.numero_orden;
-            base64 = ordenesRequest.numeroOrden;
-            ordenesRequests.add(ordenesRequest);
-        }
 
 
         OkHttpClient cliente = client.newBuilder()
@@ -479,11 +407,8 @@ public class AgendaDelDiaActivity extends AppCompatActivity {
 
                 .build();
 
-        Gson gson = new Gson();
-        String ordenes = gson.toJson(ordenesRequests);
 
-        String ver = String.valueOf(base64);
-
+        String ver = String.valueOf(detalleOrden);
         String ord = Base64.encodeToString(ver.getBytes(), Base64.URL_SAFE| Base64.NO_WRAP);
 
         MediaType mediaType = MediaType.parse("application/json; charset=utf-8");
@@ -500,7 +425,6 @@ public class AgendaDelDiaActivity extends AppCompatActivity {
                 .build();
 
 
-        int finalBase6 = base64;
 
         cliente.newCall(request).enqueue(new okhttp3.Callback() {
             @Override
@@ -512,47 +436,52 @@ public class AgendaDelDiaActivity extends AppCompatActivity {
 
             @Override
             public void onResponse(@NotNull okhttp3.Call call, @NotNull okhttp3.Response response) throws IOException {
-                try{
+                runOnUiThread(() -> {
+                    try{
 
-                    loaders.cierraProgress();
-
-                    if(response.code() == 200){
-
-
-                        runOnUiThread(() -> {
-                            refresca.setVisibility(View.GONE);
-                            textView.setVisibility(View.GONE);
-                            textView2.setVisibility(View.GONE);
-                            lista_paciente_pendientes.setVisibility(View.GONE);
-                            btncerrarpdf.setVisibility(View.VISIBLE);
-
-                            pdfView.setVisibility(View.VISIBLE);
-                        });
-
-
-                        pdfView.fromStream(response.body().byteStream()).load();
-
-                    }else if(response.code() == 401){
-                        Toast.makeText(AgendaDelDiaActivity.this, "Sesión caducada, por favor vuelva a ingresar", Toast.LENGTH_SHORT).show();
-                        Sesiones.borrarLogin(AgendaDelDiaActivity.this);
-                        Routes.goToLogin(AgendaDelDiaActivity.this);
-                    }else{
                         loaders.cierraProgress();
-                        Looper.prepare();
-                        Mensaje.mensaje(AgendaDelDiaActivity.this,"Ocurrio un error al obtener PDF, Contacte a Soporte ");
-                        Looper.loop();
 
+                        if(response.code() == 200){
+
+                            if(Objects.requireNonNull(response.body()).contentLength() > 1){
+                                runOnUiThread(() -> {
+                                    refresca.setVisibility(View.GONE);
+                                    textView.setVisibility(View.GONE);
+                                    textView2.setVisibility(View.GONE);
+                                    lista_paciente_pendientes.setVisibility(View.GONE);
+                                    btncerrarpdf.setVisibility(View.VISIBLE);
+
+                                    pdfView.setVisibility(View.VISIBLE);
+                                });
+
+
+                                pdfView.fromStream(response.body().byteStream()).load();
+                            }else{
+                                Toast.makeText(AgendaDelDiaActivity.this, "Orden médica no encontrada", Toast.LENGTH_SHORT).show();
+                            }
+
+
+
+
+                        }else if(response.code() == 401){
+                            Toast.makeText(AgendaDelDiaActivity.this, "Sesión caducada, por favor vuelva a ingresar", Toast.LENGTH_SHORT).show();
+                            Sesiones.borrarLogin(AgendaDelDiaActivity.this);
+                            Routes.goToLogin(AgendaDelDiaActivity.this);
+                        }else{
+                            loaders.cierraProgress();
+                            Mensaje.mensaje(AgendaDelDiaActivity.this,"Ocurrio un error al obtener PDF, Contacte a Soporte ");
+
+                        }
+
+
+
+                    }catch (Exception e){
+                        loaders.cierraProgress();
+                        e.printStackTrace();
+                        Mensaje.mensaje(AgendaDelDiaActivity.this,"Ocurrio un error en el aplicativo :"+e.getMessage());
                     }
+                });
 
-
-
-                }catch (Exception e){
-                    loaders.cierraProgress();
-                    e.printStackTrace();
-                    Looper.prepare();
-                    Mensaje.mensaje(AgendaDelDiaActivity.this,"Ocurrio un error en el aplicativo :"+e.getMessage());
-                    Looper.loop();
-                }
             }
 
         });
@@ -651,35 +580,7 @@ public class AgendaDelDiaActivity extends AppCompatActivity {
 
 
 
-    public void agregarDetalleOrden(DetalleOrden detalleOrden) {
 
-        boolean elimina = false;
-
-        if(lsDetalleOrdenAgregadas != null){
-            if(lsDetalleOrdenAgregadas.size() > 0){
-
-                for(DetalleOrden det : lsDetalleOrdenAgregadas){
-                    if(det.linea_detalle == detalleOrden.linea_detalle){
-                        lsDetalleOrdenAgregadas.remove(detalleOrden);
-                        elimina = true;
-                        break;
-                    }
-                }
-
-                if(!elimina){
-                    lsDetalleOrdenAgregadas.add(detalleOrden);
-                }
-
-            }else{
-                lsDetalleOrdenAgregadas.add(detalleOrden);
-            }
-        }else{
-            lsDetalleOrdenAgregadas.add(detalleOrden);
-        }
-
-        Log.e("TAMANIO","TAMANIO DE LISTA "+lsDetalleOrdenAgregadas.size());
-
-    }
 
 
 }

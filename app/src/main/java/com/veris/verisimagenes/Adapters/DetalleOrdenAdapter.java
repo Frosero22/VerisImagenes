@@ -82,14 +82,6 @@ public class DetalleOrdenAdapter implements ListAdapter {
         CardView card_view = vview.findViewById(R.id.card_view);
         CheckBox checkDetalleOrden = vview.findViewById(R.id.checkDetalleOrden);
         checkDetalleOrden.setText(listadoDetalle.get(i).nombre_prestacion);
-        checkDetalleOrden.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                Log.e("TAG","DETALLE DE LA ORDEN "+listadoDetalle.get(i).nombre_prestacion);
-                agendaDelDiaActivity.agregarDetalleOrden(listadoDetalle.get(i));
-
-            }
-        });
 
 
 

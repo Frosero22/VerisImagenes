@@ -48,6 +48,7 @@ public class Ordenes {
     public String fechaEmisionFact;
     public Integer codigoMedicoRemite;
     public Integer numeroTransaccion;
+    public String esOrdenMedica;
 
 
     @JsonIgnore

@@ -98,7 +98,7 @@ public class AgendaDelDiaAdapter implements ListAdapter {
         numero_orden.setText(String.valueOf(listaOrdenes.get(i).numeroOrden));
 
         TextView hora_inicio = vview.findViewById(R.id.hora_inicio);
-        hora_inicio.setText(listaOrdenes.get(i).horaInicioReserva);
+        hora_inicio.setText(listaOrdenes.get(i).horaInicioReserva+" - "+listaOrdenes.get(i).horaFinReserva);
 
         String prestaciones = null;
 
@@ -131,8 +131,15 @@ public class AgendaDelDiaAdapter implements ListAdapter {
         TextView nombre_paciente = vview.findViewById(R.id.nombre_paciente);
         nombre_paciente.setText(listaOrdenes.get(i).nombrePaciente);
 
+
+
         Button btn_ver_detalle = vview.findViewById(R.id.btn_ver_detalle);
-        btn_ver_detalle.setOnClickListener(view -> agendaDelDiaActivity.levantarModalDetalle(listaDetalleOrden.get(i)));
+
+        /*if(!listaOrdenes.get(i).esOrdenMedica.equalsIgnoreCase("S")){
+            btn_ver_detalle.setEnabled(false);
+        }*/
+
+        btn_ver_detalle.setOnClickListener(view -> agendaDelDiaActivity.levantarModalDetalle(listaOrdenes.get(i).numeroOrden));
 
         Button btn_ver_factura = vview.findViewById(R.id.btn_ver_factura);
         btn_ver_factura.setOnClickListener(view -> agendaDelDiaActivity.descargaPDFactura(listaDetalleOrden.get(i).numeroTransaccion));

@@ -40,7 +40,7 @@
 
         <TextView
             android:id="@+id/numero_orden"
-            android:layout_width="229dp"
+            android:layout_width="209dp"
             android:layout_height="match_parent"
 
             android:gravity="left|center"
@@ -51,7 +51,7 @@
 
         <TextView
             android:id="@+id/hora_inicio"
-            android:layout_width="wrap_content"
+            android:layout_width="77dp"
             android:layout_height="match_parent"
 
             android:gravity="left|center"
