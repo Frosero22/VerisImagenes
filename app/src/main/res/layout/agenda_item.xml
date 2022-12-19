@@ -185,7 +185,7 @@
             android:layout_height="36dp"
             android:layout_marginLeft="10dp"
             android:gravity="left|center"
-            android:text="Ver Factura"
+            android:text="Ver Tirilla"
             android:textColor="@color/white"
             android:textSize="10dp" />
 
