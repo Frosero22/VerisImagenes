@@ -91,6 +91,10 @@ public class AgendaDelDiaActivity extends AppCompatActivity {
 
     private final okhttp3.OkHttpClient client = new okhttp3.OkHttpClient();
 
+    private MenuItem buscar;
+
+    private boolean boolPDFView = false;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -125,6 +129,8 @@ public class AgendaDelDiaActivity extends AppCompatActivity {
                 pdfView.setVisibility(View.GONE);
                 btncerrarpdf.setVisibility(View.GONE);
 
+                buscar.setVisible(true);
+                boolPDFView = false;
 
 
             }
@@ -184,7 +190,7 @@ public class AgendaDelDiaActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(android.view.Menu menu) {
         getMenuInflater().inflate(R.menu.menu_gen,menu);
         MenuItem cerrarSesion = menu.findItem(R.id.cerrarSesion);
-        MenuItem buscar = menu.findItem(R.id.buscar);
+        buscar = menu.findItem(R.id.buscar);
 
         SearchView searchView = (SearchView) MenuItemCompat.getActionView(buscar);
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
@@ -246,9 +252,9 @@ public class AgendaDelDiaActivity extends AppCompatActivity {
                                                       "es",
                                                   1,
                                                                 objSucursales.codigoSucursal,
-                                                                "07/12/2022",
-                                                                "07/12/2022",
-                                                                2028);
+                                                                fechaInicio,
+                                                                fechaFin,
+                                                                objLogin.codigoProfesional);
 
         call.enqueue(new Callback<OrdenesResponse>() {
             @Override
@@ -383,13 +389,23 @@ public class AgendaDelDiaActivity extends AppCompatActivity {
     @Nullable
     @Override
     public Intent getParentActivityIntent() {
-        Routes.goToSucursales(AgendaDelDiaActivity.this,objSucursales.codigoTipoSucursal);
+        if(boolPDFView){
+            cierraPDF();
+        }else{
+            Routes.goToSucursales(AgendaDelDiaActivity.this,objSucursales.codigoTipoSucursal);
+        }
+
         return super.getParentActivityIntent();
     }
 
     @Override
     public void onBackPressed() {
-        Routes.goToSucursales(AgendaDelDiaActivity.this,objSucursales.codigoTipoSucursal);
+        if(boolPDFView){
+            cierraPDF();
+        }else{
+            Routes.goToSucursales(AgendaDelDiaActivity.this,objSucursales.codigoTipoSucursal);
+        }
+
         super.onBackPressed();
     }
 
@@ -450,8 +466,9 @@ public class AgendaDelDiaActivity extends AppCompatActivity {
                                     textView2.setVisibility(View.GONE);
                                     lista_paciente_pendientes.setVisibility(View.GONE);
                                     btncerrarpdf.setVisibility(View.VISIBLE);
-
+                                    buscar.setVisible(false);
                                     pdfView.setVisibility(View.VISIBLE);
+                                    boolPDFView = true;
                                 });
 
 
@@ -545,6 +562,8 @@ public class AgendaDelDiaActivity extends AppCompatActivity {
                                 btncerrarpdf.setVisibility(View.VISIBLE);
 
                                 pdfView.setVisibility(View.VISIBLE);
+                                buscar.setVisible(false);
+                                boolPDFView = true;
                             });
 
 
@@ -579,6 +598,17 @@ public class AgendaDelDiaActivity extends AppCompatActivity {
     }
 
 
+    public void cierraPDF(){
+        textView.setVisibility(View.VISIBLE);
+        textView2.setVisibility(View.VISIBLE);
+        lista_paciente_pendientes.setVisibility(View.VISIBLE);
+        refresca.setVisibility(View.VISIBLE);
+        pdfView.setVisibility(View.GONE);
+        btncerrarpdf.setVisibility(View.GONE);
+
+        buscar.setVisible(true);
+        boolPDFView = false;
+    }
 
 
 

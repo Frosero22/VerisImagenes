@@ -9,6 +9,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 
+import com.google.android.material.textfield.TextInputEditText;
 import com.veris.verisimagenes.Models.Login;
 import com.veris.verisimagenes.Models.Sucursales;
 import com.veris.verisimagenes.R;
@@ -28,7 +29,7 @@ import retrofit2.Response;
 public class LoginActivity extends AppCompatActivity {
 
     private EditText edUsuario;
-    private EditText edClave;
+    private TextInputEditText edClave;
     private Button btn_login;
 
     private Endpoints service = ApiClient.getInstance();

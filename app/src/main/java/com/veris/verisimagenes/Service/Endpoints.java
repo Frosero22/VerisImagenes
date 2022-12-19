@@ -27,11 +27,11 @@ public interface Endpoints {
                                                       @Header("IdOrganizacion") String IdOrganizacion,
                                                       @Header("Authorization") String Authorization);
 
-    @GET("usuarios/{secuenciaUsuario}/sucursales")
+    @GET("seguridad/v1/usuarios/{secuenciaUsuario}/sucursales")
     Call<SucursalesResponse> obtenerSucursales(@Header("Authorization") String Authorization,
                                                @Header("Application") String Application,
-                                               @Query("tipoSucursal") String tipoSucursal,
-                                               @Path("secuenciaUsuario") int secuenciaUsuario);
+                                               @Path("secuenciaUsuario") int secuenciaUsuario,
+                                               @Query("tipoSucursal") String tipoSucursal);
 
 
     @GET("apoyosdx/v1/imagenes/atender_pacientes/listado_pacientes_x_atender")

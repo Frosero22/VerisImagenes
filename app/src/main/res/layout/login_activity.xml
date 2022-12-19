@@ -24,24 +24,29 @@
     <ImageView
         android:layout_width="18dp"
         android:layout_height="23dp"
+        android:layout_marginEnd="16dp"
         android:src="@drawable/user"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.067"
+        app:layout_constraintEnd_toStartOf="@+id/edUsuario"
+        app:layout_constraintHorizontal_bias="0.053"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.601" />
 
     <ImageView
+        android:id="@+id/imageView"
         android:layout_width="18dp"
         android:layout_height="23dp"
+        android:layout_marginEnd="12dp"
         android:src="@drawable/pass"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.066"
+        app:layout_constraintEnd_toStartOf="@+id/edClav"
+        app:layout_constraintHorizontal_bias="0.021"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.676" />
+        app:layout_constraintVertical_bias="0.681" />
 
     <TextView
         android:layout_width="141dp"
@@ -58,6 +63,7 @@
         app:layout_constraintVertical_bias="0.466" />
 
     <TextView
+        android:id="@+id/textView3"
         android:layout_width="286dp"
         android:layout_height="26dp"
         android:text="Por favor ingresa tu usuario y contraseña"
@@ -90,23 +96,31 @@
     </EditText>
 
 
-    <EditText
-        android:id="@+id/edClave"
-        android:layout_width="337dp"
-        android:layout_height="43dp"
-        android:hint="Contraseña"
-        android:textColor="@color/black"
-        android:inputType="textPassword"
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/edClav"
+        android:layout_width="346dp"
+        android:layout_height="62dp"
+        android:layout_margin="5dp"
+
+        android:hint="Clave"
         android:textColorHint="@color/text"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.783"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:backgroundTint="@color/text"
-        app:layout_constraintVertical_bias="0.681">
+        app:layout_constraintVertical_bias="0.689"
+        app:passwordToggleEnabled="true">
 
-    </EditText>
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/edClave"
+            android:layout_width="337dp"
+            android:layout_height="43dp"
+            android:backgroundTint="@color/text"
+            android:textColor="@color/black"
+            android:inputType="textPassword"
+            />
+    </com.google.android.material.textfield.TextInputLayout>
 
     <Button
         android:id="@+id/btn_login"
@@ -121,5 +135,7 @@
         android:text="Iniciar Sesión">
 
     </Button>
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

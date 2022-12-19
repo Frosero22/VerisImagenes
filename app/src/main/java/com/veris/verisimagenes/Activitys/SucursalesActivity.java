@@ -96,8 +96,8 @@ public class SucursalesActivity extends AppCompatActivity {
 
         Call<SucursalesResponse> call = service.obtenerSucursales("Bearer "+objLogin.accessToken,
                                                                   objLogin.Application,
-                                                                 "TODOS",
-                                                                  objLogin.secuenciaUsuario);
+                                                                  objLogin.secuenciaUsuario,
+                                                                 "TODOS");
 
         call.enqueue(new Callback<SucursalesResponse>() {
             @Override
