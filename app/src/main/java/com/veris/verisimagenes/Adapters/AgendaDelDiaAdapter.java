@@ -129,7 +129,7 @@ public class AgendaDelDiaAdapter implements ListAdapter {
         nombre_doctor.setText(listaOrdenes.get(i).nombreMedico);
 
         TextView nombre_paciente = vview.findViewById(R.id.nombre_paciente);
-        nombre_paciente.setText(listaOrdenes.get(i).nombrePaciente);
+        nombre_paciente.setText(listaOrdenes.get(i).nombrePaciente+" | CI: "+listaOrdenes.get(i).numeroIdentificacion);
 
 
 
