@@ -13,6 +13,7 @@ import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.POST;
+import retrofit2.http.Path;
 import retrofit2.http.Query;
 
 public interface Endpoints {
@@ -26,13 +27,11 @@ public interface Endpoints {
                                                       @Header("IdOrganizacion") String IdOrganizacion,
                                                       @Header("Authorization") String Authorization);
 
-    @GET("general/v1/sucursales")
+    @GET("usuarios/{secuenciaUsuario}/sucursales")
     Call<SucursalesResponse> obtenerSucursales(@Header("Authorization") String Authorization,
                                                @Header("Application") String Application,
-                                               @Header("IdOrganizacion") String IdOrganizacion,
-                                               @Query("codigoEmpresa")Integer codigoEmpresa,
                                                @Query("tipoSucursal") String tipoSucursal,
-                                               @Query("grupoSucursal")String grupoSucursal);
+                                               @Path("secuenciaUsuario") int secuenciaUsuario);
 
 
     @GET("apoyosdx/v1/imagenes/atender_pacientes/listado_pacientes_x_atender")
