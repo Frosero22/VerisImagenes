@@ -1,6 +1,7 @@
 package com.veris.verisimagenes.Activitys;
 
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.widget.GridView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -14,6 +15,7 @@ import com.veris.verisimagenes.Service.ApiModels.TiposSucursalResponse;
 import com.veris.verisimagenes.Service.Endpoints;
 import com.veris.verisimagenes.Util.Loaders;
 import com.veris.verisimagenes.Util.Mensaje;
+import com.veris.verisimagenes.Util.Routes;
 import com.veris.verisimagenes.Util.Sesiones;
 
 import java.util.ArrayList;
@@ -55,6 +57,26 @@ public class TipoSucursalActivity extends AppCompatActivity {
         listaTiposSucursal = new ArrayList<>();
 
         listarTiposSucursal();
+    }
+
+
+    @Override
+    public boolean onCreateOptionsMenu(android.view.Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_gen,menu);
+        MenuItem cerrarSesion = menu.findItem(R.id.cerrarSesion);
+        MenuItem buscar = menu.findItem(R.id.buscar);
+        buscar.setVisible(false);
+
+
+
+        cerrarSesion.setOnMenuItemClickListener(item -> {
+            Sesiones.borrarLogin(TipoSucursalActivity.this);
+            Routes.goToLogin(TipoSucursalActivity.this);
+            return false;
+        });
+
+        return true;
+
     }
 
     public void listarTiposSucursal(){

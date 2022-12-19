@@ -1,10 +1,13 @@
 package com.veris.verisimagenes.Activitys;
 
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.GridView;
+import android.widget.SearchView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.view.MenuItemCompat;
 
 
 import com.veris.verisimagenes.Adapters.SucursalAdapter;
@@ -64,6 +67,26 @@ public class SucursalesActivity extends AppCompatActivity {
         listaSucursal = new ArrayList<>();
 
         listaSucursales();
+    }
+
+
+    @Override
+    public boolean onCreateOptionsMenu(android.view.Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_gen,menu);
+        MenuItem cerrarSesion = menu.findItem(R.id.cerrarSesion);
+        MenuItem buscar = menu.findItem(R.id.buscar);
+        buscar.setVisible(false);
+
+
+
+        cerrarSesion.setOnMenuItemClickListener(item -> {
+            Sesiones.borrarLogin(SucursalesActivity.this);
+            Routes.goToLogin(SucursalesActivity.this);
+            return false;
+        });
+
+        return true;
+
     }
 
     public void listaSucursales(){
