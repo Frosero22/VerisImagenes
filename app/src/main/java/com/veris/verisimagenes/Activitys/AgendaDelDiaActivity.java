@@ -222,21 +222,23 @@ public class AgendaDelDiaActivity extends AppCompatActivity {
 
         if(texto.length() == 0){
             lsOrdenes.clear();
+            lsDetalleOrden.clear();
             lsOrdenes.addAll(lsAuxiliar);
         }else{
 
             lsOrdenes.clear();
+            lsDetalleOrden.clear();
             for(Ordenes i : lsAuxiliar){
                 if(i.numeroOrden.toString().equals(texto) || i.nombrePaciente.toLowerCase().contains(texto)){
                     lsOrdenes.add(i);
+
 
                 }
             }
 
         }
 
-        agendaDelDiaAdapter = new AgendaDelDiaAdapter(lsOrdenes,lsDetalleOrden, AgendaDelDiaActivity.this);
-        lista_paciente_pendientes.setAdapter(agendaDelDiaAdapter);
+        estructuraOrdenes(lsOrdenes);
     }
 
 
@@ -353,6 +355,11 @@ public class AgendaDelDiaActivity extends AppCompatActivity {
         }
 
 
+
+
+
+        this.lsOrdenes.clear();
+        this.lsDetalleOrden.clear();
 
 
 

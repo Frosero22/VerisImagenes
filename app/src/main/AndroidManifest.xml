@@ -28,11 +28,9 @@
         <activity android:name=".Activitys.LectorPDFActivity"></activity>
         <activity android:name=".Activitys.AgendaDelDiaActivity" />
         <activity
-            android:name=".Activitys.SucursalesActivity"
-            android:theme="@style/Theme.AppCompat.NoActionBar" />
+            android:name=".Activitys.SucursalesActivity" />
         <activity
-            android:name=".Activitys.TipoSucursalActivity"
-            android:theme="@style/Theme.AppCompat.NoActionBar" />
+            android:name=".Activitys.TipoSucursalActivity"/>
         <activity
             android:name=".Activitys.LoginActivity"
             android:theme="@style/Theme.AppCompat.NoActionBar" />

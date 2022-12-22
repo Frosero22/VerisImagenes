@@ -37,6 +37,13 @@ public class AgendaDelDiaAdapter implements ListAdapter {
         this.agendaDelDiaActivity = (AgendaDelDiaActivity)context;
     }
 
+    public AgendaDelDiaAdapter(List<Ordenes> listado, Context context) {
+        this.context = context;
+        this.listaOrdenes = listado;
+        this.mInflater = LayoutInflater.from(context);
+        this.agendaDelDiaActivity = (AgendaDelDiaActivity)context;
+    }
+
 
     @Override
     public boolean areAllItemsEnabled() {
@@ -103,6 +110,7 @@ public class AgendaDelDiaAdapter implements ListAdapter {
         String prestaciones = null;
 
         for(DetalleOrden detalleOrden : listaDetalleOrden){
+            Log.e("")
             if(detalleOrden.numero_orden == listaOrdenes.get(i).numeroOrden){
                 if(prestaciones != null){
                     if(prestaciones.length() > 0){
@@ -142,7 +150,7 @@ public class AgendaDelDiaAdapter implements ListAdapter {
         btn_ver_detalle.setOnClickListener(view -> agendaDelDiaActivity.levantarModalDetalle(listaOrdenes.get(i).numeroOrden));
 
         Button btn_ver_factura = vview.findViewById(R.id.btn_ver_factura);
-        btn_ver_factura.setOnClickListener(view -> agendaDelDiaActivity.descargaPDFactura(listaDetalleOrden.get(i).numeroTransaccion));
+        btn_ver_factura.setOnClickListener(view -> agendaDelDiaActivity.descargaPDFactura(listaOrdenes.get(i).numeroTransaccion));
 
 
 
