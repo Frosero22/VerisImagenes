@@ -95,6 +95,9 @@ public class AgendaDelDiaActivity extends AppCompatActivity {
 
     private boolean boolPDFView = false;
 
+    //public static String baseurl = "https://api-phantomx.veris.com.ec/";//BuildConfig.baseurl;
+    public static String baseurl = "https://api.phantomx.com.ec/";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -252,7 +255,7 @@ public class AgendaDelDiaActivity extends AppCompatActivity {
                                                                 objLogin.IdOrganization,
 
                                                       "es",
-                                                  1,
+                                                                objSucursales.codigoEmpresa,
                                                                 objSucursales.codigoSucursal,
                                                                 fechaInicio,
                                                                 fechaFin,
@@ -438,7 +441,7 @@ public class AgendaDelDiaActivity extends AppCompatActivity {
         RequestBody postBody =RequestBody.create(mediaType, ord.toString());
 
         Request request = new Request.Builder()
-                .url("https://api-phantomx.veris.com.ec/reportes/v1/gestion_medica/orden_medica?codigoEmpresa=1")
+                .url(baseurl+"reportes/v1/gestion_medica/orden_medica?codigoEmpresa="+objSucursales.codigoEmpresa)
                 .method("POST", postBody)
                 .addHeader("Application", objLogin.Application)
                 .addHeader("IdOrganizacion", objLogin.IdOrganization)
@@ -533,7 +536,7 @@ public class AgendaDelDiaActivity extends AppCompatActivity {
 
 
         Request request = new Request.Builder()
-                .url("https://api-phantomx.veris.com.ec/reportes/v1/facturacion/comprobante_paciente?format=pdf&codigoEmpresa="+objSucursales.codigoEmpresa+"&numeroTransaccion="+numeroTransaccion)
+                .url(baseurl+"reportes/v1/facturacion/comprobante_paciente?format=pdf&codigoEmpresa="+objSucursales.codigoEmpresa+"&numeroTransaccion="+numeroTransaccion)
                 .method("GET", null)
                 .addHeader("Application", objLogin.Application)
                 .addHeader("IdOrganizacion", objLogin.IdOrganization)

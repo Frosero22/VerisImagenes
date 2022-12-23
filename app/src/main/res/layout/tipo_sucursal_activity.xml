@@ -11,7 +11,7 @@
     <TextView
         android:layout_width="258dp"
         android:layout_height="35dp"
-        android:text="Seleccióne el tipo Sucursal"
+        android:text="Selecciona el tipo Sucursal"
         android:textColor="@color/black"
         android:textSize="20dp"
         android:textStyle="bold"

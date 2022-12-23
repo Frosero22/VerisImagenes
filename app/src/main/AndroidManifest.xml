@@ -25,19 +25,19 @@
         android:theme="@style/Theme.VerisImagenes"
         tools:targetApi="31">
 
-        <activity android:name=".Activitys.LectorPDFActivity"></activity>
-        <activity android:name=".Activitys.AgendaDelDiaActivity" />
+        <activity android:name=".Activitys.LectorPDFActivity" android:screenOrientation="portrait"></activity>
+        <activity android:name=".Activitys.AgendaDelDiaActivity" android:screenOrientation="portrait" />
         <activity
-            android:name=".Activitys.SucursalesActivity" />
+            android:name=".Activitys.SucursalesActivity" android:screenOrientation="portrait" />
         <activity
-            android:name=".Activitys.TipoSucursalActivity"/>
+            android:name=".Activitys.TipoSucursalActivity" android:screenOrientation="portrait"/>
         <activity
             android:name=".Activitys.LoginActivity"
-            android:theme="@style/Theme.AppCompat.NoActionBar" />
+            android:theme="@style/Theme.AppCompat.NoActionBar" android:screenOrientation="portrait" />
         <activity
             android:exported="true"
             android:name=".Activitys.SplashActivity"
-            android:theme="@style/Theme.AppCompat.NoActionBar">
+            android:theme="@style/Theme.AppCompat.NoActionBar" android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

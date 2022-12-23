@@ -12,8 +12,8 @@ public class ApiClient {
     private static Endpoints single_instance = null;
     // Url prueba local
 
-    public static String baseurl = "https://api-phantomx.veris.com.ec/";//BuildConfig.baseurl;
-
+    //public static String baseurl = "https://api-phantomx.veris.com.ec/";//BuildConfig.baseurl;
+     public static String baseurl = "https://api.phantomx.com.ec/";
 
     public static Endpoints getInstance()
     {

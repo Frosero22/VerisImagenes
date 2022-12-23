@@ -110,7 +110,6 @@ public class AgendaDelDiaAdapter implements ListAdapter {
         String prestaciones = null;
 
         for(DetalleOrden detalleOrden : listaDetalleOrden){
-            Log.e("")
             if(detalleOrden.numero_orden == listaOrdenes.get(i).numeroOrden){
                 if(prestaciones != null){
                     if(prestaciones.length() > 0){
