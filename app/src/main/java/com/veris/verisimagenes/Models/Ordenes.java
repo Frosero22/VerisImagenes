@@ -13,7 +13,7 @@ public class Ordenes {
     public String horaFinReserva;
     public Integer codigoSitio;
     public String nombreSitio;
-    public Integer idPaciente;
+    public BigDecimal idPaciente;
     public String numeroIdentificacion;
     public Integer codigoTipoIdentificacion;
     public String nombrePaciente;
@@ -21,7 +21,7 @@ public class Ordenes {
     public String generoPaciente;
     public String telefonoFijo;
     public String telefonoMovil;
-    public Integer codigoReserva;
+    public BigDecimal codigoReserva;
     public String estadoReserva;
     public Integer codigoTipoReserva;
     public Integer codigoEspecialidad;

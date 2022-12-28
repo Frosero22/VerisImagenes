@@ -29,20 +29,13 @@ public class AgendaDelDiaAdapter implements ListAdapter {
     private LayoutInflater mInflater;
     public AgendaDelDiaActivity agendaDelDiaActivity;
 
-    public AgendaDelDiaAdapter(List<Ordenes> listado,List<DetalleOrden> listaDetalleOrden, Context context) {
+    public AgendaDelDiaAdapter(List<Ordenes> listado,Context context) {
         this.context = context;
         this.listaOrdenes = listado;
-        this.listaDetalleOrden = listaDetalleOrden;
         this.mInflater = LayoutInflater.from(context);
         this.agendaDelDiaActivity = (AgendaDelDiaActivity)context;
     }
 
-    public AgendaDelDiaAdapter(List<Ordenes> listado, Context context) {
-        this.context = context;
-        this.listaOrdenes = listado;
-        this.mInflater = LayoutInflater.from(context);
-        this.agendaDelDiaActivity = (AgendaDelDiaActivity)context;
-    }
 
 
     @Override
@@ -107,30 +100,9 @@ public class AgendaDelDiaAdapter implements ListAdapter {
         TextView hora_inicio = vview.findViewById(R.id.hora_inicio);
         hora_inicio.setText(listaOrdenes.get(i).horaInicioReserva+" - "+listaOrdenes.get(i).horaFinReserva);
 
-        String prestaciones = null;
-
-        for(DetalleOrden detalleOrden : listaDetalleOrden){
-            if(detalleOrden.numero_orden == listaOrdenes.get(i).numeroOrden){
-                if(prestaciones != null){
-                    if(prestaciones.length() > 0){
-                        prestaciones = prestaciones + detalleOrden.nombre_prestacion;
-                    }else{
-                        ViewGroup.LayoutParams layoutParams = lnNombrePrestacion.getLayoutParams();
-                        layoutParams.height = 46;
-                        lnNombrePrestacion.setLayoutParams(layoutParams);
-                        prestaciones = prestaciones+","+detalleOrden.nombre_prestacion;
-                    }
-                }else{
-                    prestaciones = "";
-                    prestaciones = prestaciones + detalleOrden.nombre_prestacion;
-                }
-
-            }
-        }
-
 
         TextView nombre_prestaciones = vview.findViewById(R.id.nombre_prestaciones);
-        nombre_prestaciones.setText(prestaciones);
+        nombre_prestaciones.setText(listaOrdenes.get(i).nombrePrestacion);
 
         TextView nombre_doctor = vview.findViewById(R.id.nombre_doctor);
         nombre_doctor.setText(listaOrdenes.get(i).nombreMedico);

@@ -181,8 +181,8 @@ public class AgendaDelDiaActivity extends AppCompatActivity {
         fechaInicio = objSimpleDateFormat.format(new Date());
         fechaFin = objSimpleDateFormat.format(new Date());
 
-        agendaDelDiaAdapter = new AgendaDelDiaAdapter(lsOrdenes,lsDetalleOrden, AgendaDelDiaActivity.this);
-        detalleOrdenAdapter = new DetalleOrdenAdapter(lsDetalleOrden,AgendaDelDiaActivity.this);
+        agendaDelDiaAdapter = new AgendaDelDiaAdapter(lsOrdenes, AgendaDelDiaActivity.this);
+       // detalleOrdenAdapter = new DetalleOrdenAdapter(lsDetalleOrden,AgendaDelDiaActivity.this);
 
 
         obtenerOrdenes();
@@ -241,7 +241,7 @@ public class AgendaDelDiaActivity extends AppCompatActivity {
 
         }
 
-        estructuraOrdenes(lsOrdenes);
+        armaVista();
     }
 
 
@@ -272,7 +272,14 @@ public class AgendaDelDiaActivity extends AppCompatActivity {
                     if(response.code() == 200){
                         if(response.body() != null){
 
-                            estructuraOrdenes(response.body().data);
+
+                            lsOrdenes.addAll(response.body().data);
+                            lsAuxiliar.addAll(response.body().data);
+
+
+                            armaVista();
+
+
 
                         }
                     }else if(response.code() == 401){
@@ -306,83 +313,12 @@ public class AgendaDelDiaActivity extends AppCompatActivity {
     }
 
 
-    public void estructuraOrdenes(List<Ordenes> lsOrdenes){
-
-        List<Ordenes> lsOrdenesFiltrada = new ArrayList<>();
-        List<DetalleOrden> lsDetalleOrden = new ArrayList<>();
-
-        for(Ordenes ord : lsOrdenes){
-
-            if (lsOrdenesFiltrada != null) {
-
-                if(lsOrdenesFiltrada.size() > 0){
-
-                    boolean esta = false;
-
-                    for(Ordenes ordenesFiltadas : lsOrdenesFiltrada){
-
-
-                        if (String.valueOf(ord.numeroOrden).equalsIgnoreCase(String.valueOf(ordenesFiltadas.numeroOrden))) {
-                            esta = true;
-                            break;
-                        }
-
-                    }
-
-                    if(!esta){
-                        lsOrdenesFiltrada.add(ord);
-                    }
-
-
-                }else{
-
-                    lsOrdenesFiltrada.add(ord);
-
-                }
-
-            }else{
-                lsOrdenesFiltrada.add(ord);
-            }
-
-
-        }
-
-        for(Ordenes detOrden : lsOrdenes){
-            DetalleOrden detalleOrden = new DetalleOrden();
-            detalleOrden.codigo_empresa = detOrden.codigoEmpresaIntervalo;
-            detalleOrden.numero_orden = detOrden.numeroOrden;
-            detalleOrden.nombre_prestacion = detOrden.nombrePrestacion;
-            detalleOrden.nombre_paciente = detOrden.nombrePaciente;
-            detalleOrden.numeroTransaccion = detOrden.numeroTransaccion;
-            lsDetalleOrden.add(detalleOrden);
-        }
-
-
-
-
-
-        this.lsOrdenes.clear();
-        this.lsDetalleOrden.clear();
-
-
-
-        this.lsOrdenes.addAll(lsOrdenesFiltrada);
-        this.lsAuxiliar.addAll(lsOrdenesFiltrada);
-        this.lsDetalleOrden.addAll(lsDetalleOrden);
-
-
-        armaVista();
-
-
-
-    }
-
 
     public void armaVista(){
 
         loaders.cierraProgress();
 
-        agendaDelDiaAdapter = new AgendaDelDiaAdapter(lsOrdenes,lsDetalleOrden, AgendaDelDiaActivity.this);
+        agendaDelDiaAdapter = new AgendaDelDiaAdapter(lsOrdenes, AgendaDelDiaActivity.this);
         lista_paciente_pendientes.setAdapter(agendaDelDiaAdapter);
 
     }
