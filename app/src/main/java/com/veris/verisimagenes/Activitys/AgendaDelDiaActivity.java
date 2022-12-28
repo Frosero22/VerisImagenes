@@ -44,6 +44,7 @@ import com.veris.verisimagenes.Util.Sesiones;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
+import java.net.SocketTimeoutException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -174,6 +175,13 @@ public class AgendaDelDiaActivity extends AppCompatActivity {
             lsDetalleOrden = null;
             lsDetalleOrden = new ArrayList<>();
 
+            lsAuxiliar.clear();
+            lsAuxiliar = null;
+            lsAuxiliar = new ArrayList<>();
+
+            agendaDelDiaAdapter = new AgendaDelDiaAdapter(lsOrdenes, AgendaDelDiaActivity.this);
+            lista_paciente_pendientes.setAdapter(agendaDelDiaAdapter);
+
             obtenerOrdenes();
 
         });
@@ -273,6 +281,7 @@ public class AgendaDelDiaActivity extends AppCompatActivity {
                         if(response.body() != null){
 
 
+
                             lsOrdenes.addAll(response.body().data);
                             lsAuxiliar.addAll(response.body().data);
 
@@ -304,9 +313,11 @@ public class AgendaDelDiaActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<OrdenesResponse> call, Throwable t) {
+
+
                 loaders.cierraProgress();
                 t.printStackTrace();
-                Mensaje.mensaje(AgendaDelDiaActivity.this,"Ocurrio un error en el aplicativo :"+t.getMessage());
+                Mensaje.mensaje(AgendaDelDiaActivity.this,"Ocurrio un error en el aplicativo, por favor vuelva a intentarlo");
             }
         });
 

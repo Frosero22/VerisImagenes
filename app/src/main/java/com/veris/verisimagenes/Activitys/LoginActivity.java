@@ -40,8 +40,8 @@ public class LoginActivity extends AppCompatActivity {
 
     //**Credenciales desarrollo:**
 
-    private String Application = "UEhBTlRPTVhfV0VC";
-    private String IdOrganization = "365509c8-9596-4506-a5b3-487782d5876e";
+   // private String Application = "UEhBTlRPTVhfV0VC";
+   // private String IdOrganization = "365509c8-9596-4506-a5b3-487782d5876e";
 
     //**Credenciales test:**
 
@@ -50,8 +50,8 @@ public class LoginActivity extends AppCompatActivity {
 
     //**Credenciales producción:**
 
-    //private String Application = "UEhBTlRPTVhfV0VC";
-    //private String IdOrganization = "365509c8-9596-4506-a5b3-487782d5876e";
+    private String Application = "UEhBTlRPTVhfV0VC";
+    private String IdOrganization = "365509c8-9596-4506-a5b3-487782d5876e";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
