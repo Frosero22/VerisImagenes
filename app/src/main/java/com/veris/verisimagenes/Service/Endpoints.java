@@ -18,16 +18,33 @@ import retrofit2.http.Query;
 
 public interface Endpoints {
 
-    @POST("seguridad/v1/autenticacion/login")
+    //DESARROLLO
+    String strGeneral = "general";
+    String strSeguridad = "seguridad";
+    String strAgendamiento = "agendamiento";
+
+
+    //TEST
+    /*String strGeneral = "generaltest";
+    String strSeguridad = "seguridadtest";
+    String strAgendamiento = "agendamientotest";*/
+
+
+    //PRODUCCION
+    /*String strGeneral = "general";
+    String strSeguridad = "seguridad";
+    String strAgendamiento = "agendamiento";*/
+
+    @POST(strSeguridad+"/v1/autenticacion/login")
     Call<LoginResponse> login(@Header("Application") String Application,
                               @Header("Authorization") String Authorization);
 
-    @GET("general/v1/tipos_sucursal")
+    @GET(strGeneral+"/v1/tipos_sucursal")
     Call<TiposSucursalResponse> obtenerTipoSucursales(@Header("Application") String Application,
                                                       @Header("IdOrganizacion") String IdOrganizacion,
                                                       @Header("Authorization") String Authorization);
 
-    @GET("seguridad/v1/usuarios/{secuenciaUsuario}/sucursales")
+    @GET(strSeguridad+"/v1/usuarios/{secuenciaUsuario}/sucursales")
     Call<SucursalesResponse> obtenerSucursales(@Header("Authorization") String Authorization,
                                                @Header("Application") String Application,
                                                @Path("secuenciaUsuario") int secuenciaUsuario,
@@ -46,7 +63,7 @@ public interface Endpoints {
                                          @Query("codigoProfesional")Integer codigoProfesional);
 
 
-    @POST("reporteshistoriaclinica/v1/general/orden_servicio")
+    @POST("reporteshistoriaclinica/v1/"+strGeneral+"/orden_servicio")
     Call<String> obtenerPDF(@Header("Authorization") String Authorization,
                           @Header("Application") String Application,
                           @Header("IdOrganizacion") String IdOrganizacion,

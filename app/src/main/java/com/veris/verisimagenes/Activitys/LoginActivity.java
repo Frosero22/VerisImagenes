@@ -117,8 +117,16 @@ public class LoginActivity extends AppCompatActivity {
             public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
                 loaders.cierraProgress();
                 if(response.code() == 200){
-                    Sesiones.guardarLogin(response.body(),LoginActivity.this,IdOrganization,Application);
-                    Routes.goToTipoSucursal(LoginActivity.this);
+                    if(response.body() != null){
+                        if(response.body().data.estadoUsuario.equalsIgnoreCase("CONFIRMED")){
+                            Sesiones.guardarLogin(response.body(),LoginActivity.this,IdOrganization,Application);
+                            Routes.goToTipoSucursal(LoginActivity.this);
+                        }else{
+                            Mensaje.mensaje(LoginActivity.this,"El estado del usuario es "+response.body().data.estadoUsuario+" por favor validar.");
+                        }
+                    }
+
+
                 }else{
                     Mensaje.mensaje(LoginActivity.this,"Usuario y claves incorrectos");
                 }

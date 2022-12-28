@@ -95,8 +95,8 @@ public class AgendaDelDiaActivity extends AppCompatActivity {
 
     private boolean boolPDFView = false;
 
-    //public static String baseurl = "https://api-phantomx.veris.com.ec/";//BuildConfig.baseurl;
-    public static String baseurl = "https://api.phantomx.com.ec/";
+    public static String baseurl = "https://api-phantomx.veris.com.ec/";//BuildConfig.baseurl;
+    //public static String baseurl = "https://api.phantomx.com.ec/";
 
 
     @Override
