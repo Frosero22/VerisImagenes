@@ -96,8 +96,8 @@ public class AgendaDelDiaActivity extends AppCompatActivity {
 
     private boolean boolPDFView = false;
 
-    public static String baseurl = "https://api-phantomx.veris.com.ec/";//BuildConfig.baseurl;
-    //public static String baseurl = "https://api.phantomx.com.ec/";
+    //public static String baseurl = "https://api-phantomx.veris.com.ec/";//BuildConfig.baseurl;
+    public static String baseurl = "https://api.phantomx.com.ec/";
 
 
     @Override
@@ -181,6 +181,11 @@ public class AgendaDelDiaActivity extends AppCompatActivity {
 
             agendaDelDiaAdapter = new AgendaDelDiaAdapter(lsOrdenes, AgendaDelDiaActivity.this);
             lista_paciente_pendientes.setAdapter(agendaDelDiaAdapter);
+
+            SearchView searchView = (SearchView) MenuItemCompat.getActionView(buscar);
+            searchView.setIconified(true);
+
+            searchView.onActionViewCollapsed();
 
             obtenerOrdenes();
 
@@ -317,7 +322,7 @@ public class AgendaDelDiaActivity extends AppCompatActivity {
 
                 loaders.cierraProgress();
                 t.printStackTrace();
-                Mensaje.mensaje(AgendaDelDiaActivity.this,"Ocurrio un error en el aplicativo, por favor vuelva a intentarlo");
+                Mensaje.mensaje(AgendaDelDiaActivity.this,"Existe una pérdida de conexión en el aplicativo, por favor vuelve a intentarlo.");
             }
         });
 
@@ -404,7 +409,8 @@ public class AgendaDelDiaActivity extends AppCompatActivity {
             public void onFailure(@NotNull okhttp3.Call call, @NotNull IOException e) {
                 loaders.cierraProgress();
                 e.printStackTrace();
-                Mensaje.mensaje(AgendaDelDiaActivity.this,"Ocurrio un error en el aplicativo :"+e.getMessage());
+                runOnUiThread(() -> Mensaje.mensaje(AgendaDelDiaActivity.this,"Existe una pérdida de conexión en el aplicativo, por favor vuelve a intentarlo."));
+
             }
 
             @Override
@@ -497,7 +503,8 @@ public class AgendaDelDiaActivity extends AppCompatActivity {
             public void onFailure(@NonNull okhttp3.Call call, @NonNull IOException e) {
                 loaders.cierraProgress();
                 e.printStackTrace();
-                Mensaje.mensaje(AgendaDelDiaActivity.this,"Ocurrio un error en el aplicativo :"+e.getMessage());
+                runOnUiThread(() -> Mensaje.mensaje(AgendaDelDiaActivity.this,"Existe una pérdida de conexión en el aplicativo, por favor vuelve a intentarlo."));
+
             }
 
             @Override

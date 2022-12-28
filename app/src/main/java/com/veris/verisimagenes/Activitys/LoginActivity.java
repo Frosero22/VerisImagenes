@@ -135,7 +135,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call<LoginResponse> call, Throwable t) {
                 loaders.cierraProgress();
-                Mensaje.mensaje(LoginActivity.this,"Ocurrió un error: "+t.getLocalizedMessage());
+                Mensaje.mensaje(LoginActivity.this,"Existe una pérdida de conexión en el aplicativo, por favor vuelve a intentarlo.");
             }
         });
     }
