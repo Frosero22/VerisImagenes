@@ -19,15 +19,15 @@ import retrofit2.http.Query;
 public interface Endpoints {
 
     //DESARROLLO
-    String strGeneral = "general";
+  /*  String strGeneral = "general";
     String strSeguridad = "seguridad";
-    String strAgendamiento = "agendamiento";
+    String strAgendamiento = "agendamiento"; */
 
 
     //TEST
-    /*String strGeneral = "generaltest";
+    String strGeneral = "generaltest";
     String strSeguridad = "seguridadtest";
-    String strAgendamiento = "agendamientotest";*/
+    String strAgendamiento = "agendamientotest";
 
 
     //PRODUCCION

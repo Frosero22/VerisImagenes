@@ -45,13 +45,13 @@ public class LoginActivity extends AppCompatActivity {
 
     //**Credenciales test:**
 
-    //private String Application = "UEhBTlRPTVhfV0VC";
-    //private String IdOrganization = "adf4e264-cd20-4653-9a44-025b13050992";
+    private String Application = "UEhBTlRPTVhfV0VC";
+    private String IdOrganization = "adf4e264-cd20-4653-9a44-025b13050992";
 
     //**Credenciales producción:**
 
-    private String Application = "UEhBTlRPTVhfV0VC";
-    private String IdOrganization = "365509c8-9596-4506-a5b3-487782d5876e";
+    //private String Application = "UEhBTlRPTVhfV0VC";
+    //private String IdOrganization = "365509c8-9596-4506-a5b3-487782d5876e";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

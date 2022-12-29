@@ -114,9 +114,9 @@ public class AgendaDelDiaAdapter implements ListAdapter {
 
         Button btn_ver_detalle = vview.findViewById(R.id.btn_ver_detalle);
 
-        /*if(!listaOrdenes.get(i).esOrdenMedica.equalsIgnoreCase("S")){
+        if(listaOrdenes.get(i).esOrdenMedica.equalsIgnoreCase("N")){
             btn_ver_detalle.setEnabled(false);
-        }*/
+        }
 
         btn_ver_detalle.setOnClickListener(view -> agendaDelDiaActivity.levantarModalDetalle(listaOrdenes.get(i).numeroOrden));
 
